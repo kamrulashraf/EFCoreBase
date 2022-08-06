@@ -18,16 +18,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Users> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _userService.GetAllUsers();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Users Get(int id)
         {
-            return "value";
+            return _userService.GetUserInfo(id);
         }
 
         //GET api/<UsersController>/"mdkamrul@gmail.com"
@@ -43,17 +43,19 @@ namespace API.Controllers
         {
             _userService.AddUser(user);
         }
-
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        
+        // POST api/<UsersController>
+        [HttpPut]
+        public void Update(Users user)
         {
+            _userService.UpdateUser(user);
         }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _userService.DeleteUser(id);
         }
     }
 }

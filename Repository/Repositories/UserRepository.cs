@@ -23,6 +23,18 @@ namespace Repository.Repositories
             SaveChanges();
         }
 
+        public override void Update(Users entity)
+        {
+            base.Update(entity);
+            SaveChanges();
+        }
+
+        public override void Delete(object id)
+        {
+            base.Delete(id);
+            SaveChanges();
+        }
+
         public Users GetUserNameByEmail(string email)
         {
             var  query = base.Query(x => x.Email == email);

@@ -9,6 +9,7 @@ namespace Service.Interface
 {
     public interface IUsersService
     {
+        public IEnumerable<Users> GetAllUsers();
         public Users GetUserInfo(long userID);
         public Users GetUserInfoByEmail(string email);
         public void UpdateUser(Users user);

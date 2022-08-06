@@ -21,6 +21,7 @@ namespace Service.Services
             _userRepository = userRepository;
         }
 
+
         public void AddUser(Users user)
         {
             _userRepository.Insert(user);
@@ -28,12 +29,17 @@ namespace Service.Services
 
         public void DeleteUser(long userID)
         {
-            throw new NotImplementedException();
+            _userRepository.Delete(userID);
         }
 
-        public void GetUserInfo(long userID)
+        public IEnumerable<Users> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return _userRepository.GetAllAsync().Result;
+        }
+
+        public Users GetUserInfo(long userID)
+        {
+            return _userRepository.GetByIdAsync(userID).Result;
         }
 
         public Users GetUserInfoByEmail(string email)
@@ -43,12 +49,8 @@ namespace Service.Services
 
         public void UpdateUser(Users user)
         {
-            throw new NotImplementedException();
+            _userRepository.Update(user);
         }
-
-        Users IUsersService.GetUserInfo(long userID)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

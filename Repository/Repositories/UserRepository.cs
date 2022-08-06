@@ -26,7 +26,6 @@ namespace Repository.Repositories
         public Users GetUserNameByEmail(string email)
         {
             var  query = base.Query(x => x.Email == email);
-            Console.WriteLine(query);
             var users = query.FirstOrDefault();
             return users;
         }

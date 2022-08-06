@@ -24,11 +24,11 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Core.Model.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<long>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CategoryId"), 1L, 1);
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -86,9 +86,6 @@ namespace Repository.Migrations
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CategoryId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProductDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -99,7 +96,7 @@ namespace Repository.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Product");
                 });
@@ -190,7 +187,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Core.Model.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId1")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

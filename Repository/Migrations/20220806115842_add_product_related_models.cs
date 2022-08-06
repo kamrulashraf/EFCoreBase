@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class Add_product_models : Migration
+    public partial class add_product_related_models : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace Repository.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false)
@@ -31,15 +31,14 @@ namespace Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    CategoryId1 = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.ProductID);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Product_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
@@ -97,9 +96,9 @@ namespace Repository.Migrations
                 column: "ProductVeriationVariationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoryId1",
+                name: "IX_Product_CategoryId",
                 table: "Product",
-                column: "CategoryId1");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductVariation_ProductID",

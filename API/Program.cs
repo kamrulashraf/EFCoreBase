@@ -1,3 +1,5 @@
+﻿using API.Helper;
+using AutoMapper;
 using Core.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
@@ -33,6 +35,17 @@ builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 builder.Services.AddTransient<IUsersService, UserService>();
 #endregion
 
+
+#region automapper setup
+
+var config = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new AutoMapperProfile());
+});
+var mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+#endregion
 
 
 var app = builder.Build();

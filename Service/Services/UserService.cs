@@ -32,9 +32,9 @@ namespace Service.Services
             _userRepository.Delete(userID);
         }
 
-        public IEnumerable<Users> GetAllUsers()
+        public List<Users> GetAllUsers()
         {
-            return _userRepository.GetAllAsync().Result;
+            return _userRepository.GetAllAsync().Result.ToList();
         }
 
         public Users GetUserInfo(long userID)

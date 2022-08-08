@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Model
 {
-    public class Users
+    public class Users : BaseEntity
     {
         [Key]
         [Required]

@@ -1,10 +1,10 @@
 ﻿using API.DTO;
-using API.Helper;
 using AutoMapper;
+using Core.ILogger;
 using Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Service.Interface;
-using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +16,13 @@ namespace API.Controllers
     {
         private readonly IUsersService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogManager<UsersController> _logger;
         // GET: api/<UsersController>
-        public UsersController(IUsersService userService, IMapper mapper)
+        public UsersController(IUsersService userService, IMapper mapper, ILogManager<UsersController> logger)
         {
             _userService = userService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]

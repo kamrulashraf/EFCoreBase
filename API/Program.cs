@@ -1,11 +1,14 @@
 ﻿using API.Helper;
 using AutoMapper;
+using Core.ILogger;
 using Core.IRepository;
+using Infrastucture.Logger;
 using Microsoft.EntityFrameworkCore;
 using Repository.Data;
 using Repository.IRepository;
 using Repository.Repositories;
 using Repository.UnitOfWork;
+using Serilog;
 using Service.Interface;
 using Service.Services;
 
@@ -23,6 +26,10 @@ builder.Services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(bui
 
 // registar db context
 builder.Services.AddTransient<IEntityContext, BaseDbContext>();
+
+#region Infrastructure setup
+builder.Services.AddTransient(typeof(ILogManager<>), typeof(LoggerManager<>));
+#endregion
 
 #region repository registar
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(GenericRepository<>));
@@ -47,6 +54,21 @@ builder.Services.AddSingleton(mapper);
 
 #endregion
 
+#region serilog setting
+
+var serilogConfiguration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+        .Build();
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(serilogConfiguration)
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+#endregion
 
 var app = builder.Build();
 

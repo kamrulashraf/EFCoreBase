@@ -1,12 +1,9 @@
-﻿using Core.IRepository;
+﻿using Core.ILogger;
+using Core.IRepository;
 using Core.Model;
+using Microsoft.Extensions.Logging;
 using Repository.IRepository;
 using Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Services
 {
@@ -14,11 +11,13 @@ namespace Service.Services
     {
         private readonly IBaseRepository <Users> _generictRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILogManager<UserService> _logger;
 
-        public UserService(IBaseRepository<Users> generictRepository, IUserRepository userRepository)
+        public UserService(IBaseRepository<Users> generictRepository, IUserRepository userRepository, ILogManager<UserService> logger)
         {
             _generictRepository = generictRepository;
             _userRepository = userRepository;
+            _logger = logger;
         }
 
 

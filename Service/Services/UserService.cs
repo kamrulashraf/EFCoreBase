@@ -48,6 +48,8 @@ namespace Service.Services
 
         public void UpdateUser(Users user)
         {
+            var existedUser = _userRepository.Query(u => u.UserID == user.UserID).FirstOrDefault();
+            if (existedUser == null) throw new AppException(System.Net.HttpStatusCode.NotFound, "This user does not exists.");
             _userRepository.Update(user);
         }
         

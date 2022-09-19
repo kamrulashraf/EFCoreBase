@@ -1,4 +1,5 @@
 ﻿using Core.IRepository;
+using Core.IValidation;
 using Core.Model;
 using Repository.Data;
 using Repository.UnitOfWork;
@@ -10,7 +11,7 @@ namespace Repository.Repositories
     {
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public UserRepository(IUnitOfWorkFactory unitOfWorkFactory, BaseDbContext context)
+        public UserRepository(IUnitOfWorkFactory unitOfWorkFactory, BaseDbContext context, IGuardService nullGuard) : base(nullGuard)
         {
             base.context = context;
             base.dbSet = context.Set<Users>();

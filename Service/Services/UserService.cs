@@ -1,4 +1,5 @@
-﻿using Core.ILogger;
+﻿using Core.AppExceptions;
+using Core.ILogger;
 using Core.IRepository;
 using Core.Model;
 using Microsoft.Extensions.Logging;
@@ -38,7 +39,17 @@ namespace Service.Services
 
         public Users GetUserInfo(long userID)
         {
-            return _userRepository.GetByIdAsync(userID).Result;
+            Users user = new Users();
+            try
+            {
+                throw new Exception();
+                user = _userRepository.GetByIdAsync(userID).Result;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            return user;
         }
 
         public Users GetUserInfoByEmail(string email)
@@ -52,6 +63,5 @@ namespace Service.Services
             if (existedUser == null) throw new AppException(System.Net.HttpStatusCode.NotFound, "This user does not exists.");
             _userRepository.Update(user);
         }
-        
     }
 }

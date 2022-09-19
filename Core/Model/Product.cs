@@ -2,7 +2,7 @@
 
 namespace Core.Model
 {
-    public class Product
+    public class Product : BaseEntity
     {
         [Key]
         public long ProductID { get; set; }
@@ -13,5 +13,10 @@ namespace Core.Model
         public long CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection <ProductVariation> ProductVariations { get; set; }
+
+        public Product()
+        {
+            this.ProductVariations = new HashSet<ProductVariation>();
+        }
     }
 }

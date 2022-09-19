@@ -1,10 +1,11 @@
-﻿using API.DTO;
+﻿using API.DTO.Users;
 using AutoMapper;
 using Core.ILogger;
 using Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Service.Interface;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -67,6 +68,12 @@ namespace API.Controllers
         public void Delete(int id)
         {
             _userService.DeleteUser(id);
+        }
+
+        [HttpGet("Test/{email}")]
+        public string test([Required][EmailAddress] string email)
+        {
+            return "testData";
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Core.Model
 {
-    public class Category
+    public class Category : BaseEntity
     {
         [Key]
         public long CategoryId { get; set; }

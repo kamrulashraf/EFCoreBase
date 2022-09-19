@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Repository.IRepository;
 using Core.IRepository;
+using Core.IValidation;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Repository.Repositories
 {
@@ -15,6 +17,13 @@ namespace Repository.Repositories
     {
         protected DbContext context;
         protected DbSet<TEntity> dbSet;
+        protected readonly IGuardService _gurdService;
+
+
+        public GenericRepository(IGuardService gurdService)
+        {
+            _gurdService = gurdService;
+        }
 
         public async virtual Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
         {
@@ -85,6 +94,8 @@ namespace Repository.Repositories
         public virtual void Delete(object id)
         {
             TEntity entityToDelete = dbSet.Find(id);
+            _gurdService.AgainstNull(entityToDelete, System.Net.HttpStatusCode.NotFound, "Provided entity is not found.");
+
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
